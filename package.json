@@ -1,0 +1,28 @@
+{
+  "name": "proyecto-mocking",
+  "version": "1.0.0",
+  "description": "Proyecto de mocking de usuarios y mascotas",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --env-file=.env.dev index.js",
+    "prod": "node --env-file=.env.prod index.js"
+  },
+  "keywords": [
+    "express",
+    "mongodb",
+    "mocking"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^9.9.0",
+    "bcrypt": "^6.0.0",
+    "commander": "^14.0.0",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.0",
+    "winston": "^3.17.0"
+  }
+}

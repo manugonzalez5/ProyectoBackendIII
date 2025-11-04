@@ -5,8 +5,36 @@ import Pet from '../models/Pet.js';
 const router = Router();
 
 /**
- * GET /api/pets
- * Obtiene todas las mascotas de la base de datos
+ * @swagger
+ * /api/pets:
+ *   get:
+ *     summary: Obtiene todas las mascotas
+ *     tags: [Pets]
+ *     description: Retorna una lista completa de todas las mascotas registradas
+ *     responses:
+ *       200:
+ *         description: Lista de mascotas obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 count:
+ *                   type: integer
+ *                   example: 10
+ *                 payload:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Pet'
+ *       500:
+ *         description: Error del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.get('/', async (req, res) => {
     try {
@@ -31,6 +59,14 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
     try {
+        // Validar que el ID sea un ObjectId válido de MongoDB
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'ID de mascota inválido'
+            });
+        }
+
         const pet = await Pet.findById(req.params.id).populate('owner');
 
         if (!pet) {

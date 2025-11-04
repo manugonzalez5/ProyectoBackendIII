@@ -6,8 +6,29 @@ import Pet from '../models/Pet.js';
 const router = Router();
 
 /**
- * GET /api/mocks/mockingpets
- * Genera 100 mascotas mock 
+ * @swagger
+ * /api/mocks/mockingpets:
+ *   get:
+ *     summary: Genera 100 mascotas mock
+ *     tags: [Mocks]
+ *     description: Retorna 100 mascotas generadas aleatoriamente para pruebas
+ *     responses:
+ *       200:
+ *         description: Mascotas generadas exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 payload:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Pet'
+ *       500:
+ *         description: Error del servidor
  */
 router.get('/mockingpets', (req, res) => {
     try {
@@ -82,7 +103,7 @@ router.post('/generateData', async (req, res) => {
             });
         }
 
-        // Validar límite máximo (para evitar sobrecargas)
+        // Validar límite máximo (opcional, para evitar sobrecargas)
         const MAX_RECORDS = 1000;
         if (numUsers > MAX_RECORDS || numPets > MAX_RECORDS) {
             return res.status(400).json({
@@ -97,16 +118,16 @@ router.post('/generateData', async (req, res) => {
         };
 
         // Generar e insertar usuarios
-        if (users > 0) {
-            const generatedUsers = await generateUsers(users);
+        if (numUsers > 0) {
+            const generatedUsers = await generateUsers(numUsers);
             const insertedUsers = await User.insertMany(generatedUsers);
             results.users.count = insertedUsers.length;
             results.users.inserted = insertedUsers.map(u => u._id);
         }
 
         // Generar e insertar mascotas
-        if (pets > 0) {
-            const generatedPets = generatePets(pets);
+        if (numPets > 0) {
+            const generatedPets = generatePets(numPets);
             const insertedPets = await Pet.insertMany(generatedPets);
             results.pets.count = insertedPets.length;
             results.pets.inserted = insertedPets.map(p => p._id);

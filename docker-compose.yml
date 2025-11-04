@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # Servicio de la aplicación Node.js
+  app:
+    build: .
+    container_name: adoptme-api
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      # Usar MongoDB Atlas (reemplaza con tu URI)
+      MONGODB_URI: ${MONGODB_URI}
+    networks:
+      - app-network
+
+# Red para comunicación entre servicios
+networks:
+  app-network:
+    driver: bridge

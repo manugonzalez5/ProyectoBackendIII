@@ -69,7 +69,7 @@ docker-compose up -d
 1. **Clonar el repositorio**
 ```bash
 git clone https://github.com/manugonzalez5/ProyectoBackendIII
-cd tu-repositorio
+cd ProyectoBackendIII
 ```
 
 2. **Instalar dependencias**
@@ -217,8 +217,9 @@ docker-compose down
 
 ## 👨‍💻 Autor
 
-**Tu Nombre**
+**Manuel Joaquin Gonzalez**
 - GitHub: [@manugonzalez5](https://github.com/manugonzalez5)
+- - Email: manujoaquingonzalez5@gmail.com
 
 
 ## 📄 Licencia
